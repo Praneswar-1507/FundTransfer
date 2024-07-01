@@ -1,4 +1,4 @@
-package com.chainsys.model;
+package com.chainsys.fundtransfer.model;
 
 import java.util.Arrays;
 

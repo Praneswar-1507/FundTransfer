@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%-- <%@ page import="com.chainsys.fundtransfer.model.User"%> --%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,6 +135,7 @@ main {
 	background-color: #23527c;
 }
 
+/* Footer */
 footer {
 	background-color: #333;
 	color: #fff;
@@ -161,35 +165,48 @@ footer {
 </style>
 </head>
 <body>
-
+	<!-- Navigation Bar -->
+	<!-- Navigation Bar -->
 	<nav class="navbar">
-		<a href="#" class="logo"> <img src="images/fastpay.jpg" alt="FastPay Logo">
+		<a href="#" class="logo"> <img src="images.jpg" alt="FastPay Logo">
 		</a>
 		<ul class="nav-items">
 			<li><a href="#">Home</a></li>
 			<li><a href="#">About</a></li>
+	<%-- 		<% 
+               User userId=(User)session.getAttribute("username"); 
+    
+    %>
+		 --%><%-- 	<form action="BankAccount" method="post">
+				<input type="hidden" name="action" value="login2"> <input
+					type="hidden" value="<%=userId.getId()%>" name="id"> --%>
+			<%-- 	<button type="submit" class="login-btn"><%=userId.getUsername()%></button> --%>
+		<!-- 	</form> -->
 			<li><a href="#">Contact</a></li>
 			<li>
-				<form action="login.jsp" method="get">
+				<form action="home.jsp" method="post">
 					<input type="hidden" name="login" value="login1">
-					<button type="submit" class="login-btn">Login</button>
+					<button type="submit" class="login-btn">Logout</button>
 				</form>
 			</li>
 		</ul>
 	</nav>
 
-
+	<!-- Main Content Section -->
 	<main>
 		<div class="left-content">
 			<div class="intro">
 				<h1>Welcome to Fast pay</h1>
 				<p>Your trusted platform for secure money transfers.</p>
-
+				<form action="bankaccount.jsp" method="post">
+					<input type="hidden" name="login" value="createAccount">
+					<button type="submit">Create Account</button>
+				</form>
 			</div>
 		</div>
 	</main>
 
-
+	<!-- Footer Section -->
 	<footer>
 		<p>© 2024 Fastpay. All rights reserved.</p>
 		<div class="social-media">

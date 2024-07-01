@@ -1,4 +1,4 @@
-package com.chainsys.model;
+package com.chainsys.fundtransfer.model;
 
 public class Beneficiary {
 	String beneficiaryName, beneficiaryAccountId, ifsccode;

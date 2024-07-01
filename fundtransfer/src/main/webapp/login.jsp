@@ -265,8 +265,8 @@ img{
         <div class="shape2"></div>
 
         <div class="form">
-            <img src="login.jpg" alt="login" class="form__img">
-            <form action="TransferOnline" method="post" class="form__content">
+            <img src="images/login.jpg" alt="login" class="form__img">
+            <form action="login" method="post" class="form__content">
                 <h1 class="form__title">Welcome</h1>
 
                 <div class="form__div form__div-one">

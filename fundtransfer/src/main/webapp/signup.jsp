@@ -92,7 +92,7 @@ body {
 <body>
 	<div class="login-container">
 		<h2>Signup</h2>
-		<form action="TransferOnline" method="post">
+		<form action="register" method="post">
 			<div class="form-group">
 				<label for="username">Username:</label> <input type="text"
 					id="username" name="username" pattern="[A-Za-z]{4,}" required>

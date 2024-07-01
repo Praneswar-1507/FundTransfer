@@ -1,10 +1,10 @@
-package com.chainsys.model;
+package com.chainsys.fundtransfer.model;
 
-public class TransferAmount {
+public class Transaction {
 	String sendAccountNo, recepientAccountNo;
 	int amount, transferId, userId;
 	String iFSC, date, transfertype;
-	public TransferAmount()
+	public Transaction()
 	{
 		
 	}
@@ -56,7 +56,7 @@ public class TransferAmount {
 	public void setTransfertype(String transfertype) {
 		this.transfertype = transfertype;
 	}
-	public TransferAmount(String sendAccountNo, String recepientAccountNo, int amount, int transferId, int userId,
+	public Transaction(String sendAccountNo, String recepientAccountNo, int amount, int transferId, int userId,
 			String iFSC, String date, String transfertype) {
 		super();
 		this.sendAccountNo = sendAccountNo;
