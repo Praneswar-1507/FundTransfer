@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.chainsys.fundtransfer.model.User;
 
-public class Mapper implements RowMapper<User> {
+public class UserMapper implements RowMapper<User> {
 
 	@Override
 	

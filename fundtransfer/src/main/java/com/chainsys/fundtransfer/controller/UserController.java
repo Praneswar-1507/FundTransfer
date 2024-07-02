@@ -48,6 +48,7 @@ User user=userdao.login(email, password);
 if(user!=null) {
 	session.setAttribute("email", user.getEmail());
 	session.setAttribute("username", user.getUsername());
+	session.setAttribute("id",user.getId());
 	if(email.endsWith("admin@fastpay.com"))
 	{
 		return "redirect:/admin.jsp";
@@ -61,7 +62,9 @@ else
 {
 	return "signup.jsp";
 }
+}
+
 
    
 }
-}
+

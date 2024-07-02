@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%-- <%@ page import="com.chainsys.fundtransfer.model.User"%> --%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -168,20 +167,20 @@ footer {
 	<!-- Navigation Bar -->
 	<!-- Navigation Bar -->
 	<nav class="navbar">
-		<a href="#" class="logo"> <img src="images.jpg" alt="FastPay Logo">
+		<a href="#" class="logo"> <img src="images/fastpay.jpg" alt="FastPay Logo">
 		</a>
 		<ul class="nav-items">
 			<li><a href="#">Home</a></li>
 			<li><a href="#">About</a></li>
-	<%-- 		<% 
-               User userId=(User)session.getAttribute("username"); 
+			<% 
+             session.getAttribute("username"); 
     
     %>
-		 --%><%-- 	<form action="BankAccount" method="post">
+		 	<li><form action="BankAccount" method="post">
 				<input type="hidden" name="action" value="login2"> <input
-					type="hidden" value="<%=userId.getId()%>" name="id"> --%>
-			<%-- 	<button type="submit" class="login-btn"><%=userId.getUsername()%></button> --%>
-		<!-- 	</form> -->
+					type="hidden" value="<%=session.getAttribute("email")%>" name="id"> 
+		 	<button type="submit" class="login-btn"><%=session.getAttribute("username")%></button></li>
+		
 			<li><a href="#">Contact</a></li>
 			<li>
 				<form action="home.jsp" method="post">
@@ -198,7 +197,7 @@ footer {
 			<div class="intro">
 				<h1>Welcome to Fast pay</h1>
 				<p>Your trusted platform for secure money transfers.</p>
-				<form action="bankaccount.jsp" method="post">
+				<form action="bankAccount.jsp" method="post">
 					<input type="hidden" name="login" value="createAccount">
 					<button type="submit">Create Account</button>
 				</form>
