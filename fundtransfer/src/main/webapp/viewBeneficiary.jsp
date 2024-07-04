@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="com.fundtransfer.model.Beneficiary"%>
-<%@ page import="com.fundtransfer.model.FundTransferPojo"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.chainsys.fundtransfer.model.Beneficiary"%>
+
 <!DOCTYPE html>
 <html lang="eng">
 <head>
@@ -177,15 +177,12 @@ th {
 					History</a></li>
 		</ul>
 	</div>
-	<%
-            FundTransferPojo userId = (FundTransferPojo) session.getAttribute("user");
-            %>
+	
 	<!-- Main Content -->
 	<div class="table-container">
 		<table>
 			<thead>
 				<tr>
-					<th>Beneficiary Id</th>
 					<th>Beneficiary Name</th>
 					<th>Beneficiary Account ID</th>
 					<th>Beneficiary IFSC</th>
@@ -194,13 +191,12 @@ th {
 				</tr>
 			</thead>
 			<tbody>
-				<% ArrayList<Beneficiary> beneficiaryList = (ArrayList<Beneficiary>) request.getAttribute("userbeneficiary"); %>
+				<% List<Beneficiary> beneficiaryList = (List<Beneficiary>) request.getAttribute("beneficiarydetails"); %>
 				<% for (Beneficiary view : beneficiaryList) { %>
 				<tr>
-					<td><%= view.getBeneficiaryId() %></td>
 					<td><%= view.getBeneficiaryName() %></td>
-					<td><%= view.getBeneficiaryAccountId() %></td>
-					<td><%= view.getIfsccode() %></td>
+					<td><%= view.getBeneficiaryAccountId()%></td>
+					<td><%= view.getIfsccode()%></td>
 					<td>
 						<!-- Edit Button -->
 						<button type="button" class="edit-button"
@@ -209,8 +205,8 @@ th {
 					</td>
 					<td>
 						<!-- Delete Form -->
-						<form action="BeneficiaryEdit" method="post">
-							<input type="hidden" name="viewid" value="<%= userId.getId() %>">
+						<form action="deletebeneficiary" method="post">
+							<input type="hidden" name="viewid" value="<%=session.getAttribute("id") %>">
 							<input type="hidden" name="action" value="deletebeneficiary">
 							<input type="hidden" name="deleteid"
 								value="<%= view.getBeneficiaryId() %>">
@@ -228,7 +224,7 @@ th {
 		<div class="modal-content">
 			<span class="close" onclick="closePopup()">&times;</span>
 			<h2>Edit Beneficiary</h2>
-			<form id="editForm" action="BeneficiaryEdit" method="post">
+			<form id="editForm" action="updatebeneficiarydetails" method="post">
 				<input type="hidden" id="editBeneficiaryId" name="editBeneficiaryId">
 				<label for="editBeneficiaryName">Beneficiary Name:</label> <input
 					type="text" id="editBeneficiaryName" name="editBeneficiaryName"
@@ -238,7 +234,7 @@ th {
 					for="editBeneficiaryIfscCode">Beneficiary IFSC Code:</label> <input
 					type="text" id="editBeneficiaryIfscCode"
 					name="editBeneficiaryIfscCode" required> <input
-					type="hidden" name="id" value="<%= userId.getId() %>"> <input
+					type="hidden" name="id" value="<%=session.getAttribute("id") %>"> <input
 					type="hidden" name="action" value="editbeneficiary">
 				<button type="submit">Save Changes</button>
 			</form>

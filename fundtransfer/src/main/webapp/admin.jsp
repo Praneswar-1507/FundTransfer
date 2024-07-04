@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="com.chainsys.fundtransfer.model.BankAccount"%>
+<%@ page import="java.util.List"%>
 
-<%@ page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -175,29 +176,27 @@ table.table td .add {
 					<th style="width: 30%;">AadharNumber</th>
 					<th style="width: 30%;">IFSCcode</th>
 					<th style="width: 40%;">Address</th>
-					<th style="width: 18%;">Balance</th>
 					<th style="width: 30%;">AccountId</th>
 					<th style="width: 30%;">GenerateId</th>
 				</tr>
 				<tbody>
-					<% 
-            Jdbc jdbc = new Jdbc();
-            ArrayList<BankAccountPojo> array = jdbc.read();
-            for (BankAccountPojo view : array) { 
-            %>
+			  <% 
+			
+                        List<BankAccount> array =(List<BankAccount>)request.getAttribute("usersData");
+                        for (BankAccount view : array) { 
+                        %>
 					<tr>
 						<td><%=view.getUserId() %></td>
 						<td><%=view.getFirstName() %></td>
 						<td><%=view.getLastName() %></td>
-						<td><%=view.getPhonenumber() %></td>
+						<td><%=view.getPhoneNumber() %></td>
 						<td><%=view.getDate() %></td>
-						<td><%=view.getAadharNumber() %></td>
-						<td><%=view.getiFSCcode() %></td>
+						<td><%=view.getAadharNumber()%></td>
+						<td><%=view.getIfscCode() %></td>
 						<td><%=view.getAddress() %></td>
-						<td><%=view.getAccountBalance() %></td>
 						<td><%=view.getAccountId() %></td>
 						<td>
-							<form action="BankAccount" method="post">
+							<form action="approveUser" method="post">
 								<input type="hidden" name="action" value="generateID"> <input
 									type="hidden" name="generateid" value="<%=view.getUserId()%>">
 								<button type="submit" title="Approve">Approve</button>

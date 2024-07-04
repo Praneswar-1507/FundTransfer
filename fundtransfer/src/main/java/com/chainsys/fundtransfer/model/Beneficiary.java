@@ -1,5 +1,8 @@
 package com.chainsys.fundtransfer.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Beneficiary {
 	String beneficiaryName, beneficiaryAccountId, ifsccode;
 	int userId, beneficiaryId, beneficiaryBalance;

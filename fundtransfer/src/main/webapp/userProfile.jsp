@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="com.fundtransfer.model.BankAccountPojo"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="com.fundtransfer.util.Jdbc"%>
-<%@ page import="com.fundtransfer.model.FundTransferPojo"%>
+<%@ page import="com.chainsys.fundtransfer.model.BankAccount"%>
+
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <!DOCTYPE html>
@@ -201,28 +200,26 @@ body {
 </head>
 <body>
 	<%
-	BankAccountPojo userAccount = (BankAccountPojo) request.getAttribute("userData");
+	BankAccount userAccount = (BankAccount) request.getAttribute("userprofiledetails");
 	%>
 	<div class="sidebar">
 		<div class="sidebar-header">
-			<%
-			FundTransferPojo userId = (FundTransferPojo) session.getAttribute("user");
-			%>
+			
 			<h2>
 				<i class="fas fa-piggy-bank"></i> fastpay
 			</h2>
 		</div>
 		<ul>
 			<li><a
-				href="transfertype.jsp?accountNo=<%=userAccount.getAccountId()%>"><i
+				href="transferType.jsp"><i
 					class="fas fa-exchange-alt"></i> Fund Transfer</a></li>
 			<li><a href="#" onclick="openPopup('depositPopup')"><i
 					class="fas fa-coins"></i> Deposit</a></li>
-			<li><a href="TransactionHistory?userId=<%=userId.getId()%>"><i
+			<li><a href="TransactionHistory?userId=<%=session.getAttribute("id")%>"><i
 					class="fas fa-history"></i> Transaction History</a></li>
 			<li><a href="#" onclick="openPopup('addBeneficiaryPopup')"><i
 					class="fas fa-user-plus"></i> Add Beneficiary</a></li>
-			<li><a href="BankAccount?userId=<%=userId.getId()%>"><i
+			<li><a href="viewbeneficiary?userId=<%=session.getAttribute("id")%>"><i
 					class="fas fa-history"></i>View Beneficiary</a></li>
 		</ul>
 	</div>
@@ -236,7 +233,7 @@ body {
 				<div class="info-line">
 					<p>
 						Phone Number:
-						<%=userAccount.getPhonenumber()%></p>
+						<%=userAccount.getPhoneNumber()%></p>
 					<button class="edit-button" onclick="openPopup('phoneNumberPopup')"
 						title="Edit">
 						<i class="material-icons">&#xE254;</i>
@@ -260,7 +257,7 @@ body {
 					<%=userAccount.getAccountId()%></p>
 				<p>
 					IFSC Code:
-					<%=userAccount.getiFSCcode()%></p>
+					<%=userAccount.getIfscCode()%></p>
 			</div>
 		</div>
 	</div>
@@ -272,12 +269,11 @@ body {
 				aria-label="Close popup">&times;</button>
 
 			<h3>Edit Phone Number</h3>
-			<form action="BankAccount" method="post">
+			<form action="updatephonenumber" method="post">
 				<input type="text" name="phoneNumber"
 					placeholder="Enter new phone number" pattern="[0-9]{10}" required>
-				<input type="hidden" name="action" value="updatePhoneNumber">
 				<input type="hidden" name="phonenumber"
-					value="<%=userId.getId()%>"> <input type="submit"
+					value="<%=session.getAttribute("id")%>"> <input type="submit"
 					value="Update">
 			</form>
 		</div>
@@ -288,11 +284,11 @@ body {
 			<button class="close" onclick="closePopup('addressPopup')"
 				aria-label="Close popup">&times;</button>
 			<h3>Edit Address</h3>
-			<form action="BankAccount" method="post">
+			<form action="updateaddress" method="post">
 				<input type="text" name="addressValue"
 					placeholder="Enter new address"> <input type="hidden"
 					name="action" value="updateAddress"> <input type="hidden"
-					name="address" value="<%=userId.getId()%>"> <input
+					name="address" value="<%=session.getAttribute("id")%>"> <input
 					type="submit" value="Update">
 			</form>
 		</div>
@@ -309,7 +305,7 @@ body {
 					style="width: 80%; padding: 10px;" Enter amount to
 					deposit" required> <input type="hidden" name="action"
 					value="deposit"> <input type="hidden" name="accountId"
-					value="<%=userId.getId()%>"> <input type="submit"
+					value="<%=session.getAttribute("id")%>"> <input type="submit"
 					value="Deposit">
 			</form>
 		</div>
@@ -320,7 +316,7 @@ body {
 			<button class="close" onclick="closePopup('addBeneficiaryPopup')"
 				aria-label="Close popup">&times;</button>
 			<h3>Add Beneficiary</h3>
-			<form action="BankAccount" method="post">
+			<form action="addbeneficiary" method="post">
 				<input type="text" name="beneficiaryName"
 					placeholder="Beneficiary Name" required> <input type="text"
 					name="accountID" placeholder="Beneficiary Account ID"
@@ -328,7 +324,7 @@ body {
 					name="ifscCode" placeholder="IFSC Code"
 					pattern="^([A-Z]{4}[0][A-Z0-9]{6})$" required> <input
 					type="hidden" name="action" value="beneficiary"> <input
-					type="hidden" name="userId" value="<%=userId.getId()%>">
+					type="hidden" name="userId" value="<%=session.getAttribute("id")%>">
 				<input type="submit" value="Add Beneficiary">
 			</form>
 		</div>

@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.fundtransfer.model.FundTransferPojo"%>
-<%@ page import="com.fundtransfer.model.BankAccountPojo"%>
-<%@ page import="com.fundtransfer.util.Jdbc"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,48 +81,19 @@ select {
     text-align: center;
 }
 </style>
-<script>
-function validateForm() {
-    const currentBalance = parseFloat(document.getElementById('currentBalance').value);
-    const transferAmount = parseFloat(document.getElementById('amount').value);
-    const errorMessage = document.getElementById('error-message');
 
-    errorMessage.innerText = ''; 
-
-    if (transferAmount > currentBalance) {
-        errorMessage.innerText = 'Insufficient balance.';
-        return false;
-    }
-    return true;
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    const inputs = document.querySelectorAll("input[type='text'], input[type='number'], select");
-    const errorMessage = document.getElementById('error-message');
-    
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            errorMessage.innerText = ''; 
-        });
-    });
-});
-</script>
 </head>
 <body>
     <div class="container">
         <h2>Fund Transfer Form</h2>
-        <form action="AmountTransfer" method="post" onsubmit="return validateForm()">
+        <form action="fundtransfer" method="post" >
 
-            <% 
-                FundTransferPojo userId = (FundTransferPojo) session.getAttribute("user");
-                Jdbc crud = new Jdbc(); 
-                BankAccountPojo userAccount = crud.read1(userId.getId());
-            %>
-            <input type="hidden" id="currentBalance" value="<%= userAccount.getAccountBalance() %>">
-            <input type="hidden" value="<%= userId.getId() %>" name="fundId">
+          
+           
+            <input type="hidden" value="<%=session.getAttribute("id") %>" name="fundId">
 
             <label for="transferType">Sender Account:</label> 
-            <input type="text" id="transferType" name="senderAccount" pattern="^[0-9]{12}$" value="<%= request.getParameter("accountId") %>">
+            <input type="text" id="transferType" name="senderAccount" pattern="^[0-9]{12}$" value="<%=session.getAttribute("accountid") %>">
             
             <label for="receiverAccount">Receiver Account:</label> 
             <input type="text" id="receiverAccount" name="receiverAccount" pattern="^[0-9]{12}$">

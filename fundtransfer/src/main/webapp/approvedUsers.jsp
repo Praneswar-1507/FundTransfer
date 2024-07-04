@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="com.fundtransfer.model.BankAccountPojo"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="com.fundtransfer.util.Jdbc"%>
+<%@ page import="com.chainsys.fundtransfer.model.BankAccount"%>
+<%@ page import="java.util.List"%>
+
 <!DOCTYPE html>
 <html lang=eng>
 <head>
@@ -178,7 +178,6 @@ table.table td .add {
 					<th style="width: 30%;">AadharNumber</th>
 					<th style="width: 30%;">IFSCcode</th>
 					<th style="width: 40%;">Address</th>
-					<th style="width: 18%;">Balance</th>
 					<th style="width: 30%;">AccountId</th>
 
 
@@ -186,21 +185,19 @@ table.table td .add {
 				</tr>
 				<tbody>
 					<% 
-					Jdbc viewApproved  = new Jdbc(); 
-					ArrayList<BankAccountPojo> approvedUsers =(ArrayList<BankAccountPojo>)request.getAttribute("approveduserslist");
+					List<BankAccount> approvedUsers =(List<BankAccount>)request.getAttribute("approveduserslist");
 					 if (approvedUsers!= null && !approvedUsers.isEmpty()){
-					  for (BankAccountPojo view : approvedUsers){ 
+					  for (BankAccount view : approvedUsers){ 
 				%>
 					<tr>
 						<td><%=view.getUserId() %></td>
 						<td><%=view.getFirstName() %></td>
 						<td><%=view.getLastName() %></td>
-						<td><%=view.getPhonenumber() %></td>
+						<td><%=view.getPhoneNumber() %></td>
 						<td><%=view.getDate() %></td>
 						<td><%=view.getAadharNumber() %></td>
-						<td><%=view.getiFSCcode() %></td>
+						<td><%=view.getIfscCode() %></td>
 						<td><%=view.getAddress() %></td>
-						<td><%=view.getAccountBalance() %></td>
 						<td><%=view.getAccountId() %></td>
 						<%
                 }

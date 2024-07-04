@@ -176,9 +176,9 @@ footer {
              session.getAttribute("username"); 
     
     %>
-		 	<li><form action="BankAccount" method="post">
+		 	<li><form action="userprofile" method="post">
 				<input type="hidden" name="action" value="login2"> <input
-					type="hidden" value="<%=session.getAttribute("email")%>" name="id"> 
+					type="hidden" value="<%=session.getAttribute("id")%>" name="id"> 
 		 	<button type="submit" class="login-btn"><%=session.getAttribute("username")%></button></li>
 		
 			<li><a href="#">Contact</a></li>

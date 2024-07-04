@@ -1,10 +1,13 @@
 package com.chainsys.fundtransfer.model;
 
-public class TransactionDetails {
+import org.springframework.stereotype.Component;
+
+@Component
+public class Payment {
 	String sendAccountNo, recepientAccountNo;
 	int amount, transferId, userId;
 	String ifsc, date, transferType;
-	public TransactionDetails()
+	public Payment()
 	{
 		
 	}
@@ -56,7 +59,7 @@ public class TransactionDetails {
 	public void setTransfertype(String transfertype) {
 		this.transferType = transfertype;
 	}
-	public TransactionDetails(String sendAccountNo, String recepientAccountNo, int amount, int transferId, int userId,
+	public Payment(String sendAccountNo, String recepientAccountNo, int amount, int transferId, int userId,
 			String iFSC, String date, String transfertype) {
 		super();
 		this.sendAccountNo = sendAccountNo;

@@ -21,6 +21,7 @@ public class UserAccountDetailsMapper implements RowMapper<BankAccount> {
 		account.setDate(rs.getString("date_of_birth"));
 		account.setIfscCode(rs.getString("IFSC"));
 		account.setAddress(rs.getString("residential_address"));
+		account.setAccountBalance(rs.getInt("account_Balance"));
 		return account;
 	}
 

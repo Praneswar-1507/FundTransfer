@@ -109,7 +109,7 @@ body {
 			</div>
 			<div class="form-group">
 				<label for="password">ConfirmPassword:</label> <input
-					type="password" id="password" name="password"
+					type="password" id="password" name="confirmpassword"
 					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" required>
 			</div>
 			<div class="form-group">
