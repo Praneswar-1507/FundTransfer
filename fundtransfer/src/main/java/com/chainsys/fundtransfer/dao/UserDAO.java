@@ -27,4 +27,11 @@ public interface UserDAO {
     public void updateBeneficiaryDetails(Beneficiary beneficiary);
     public String getAccountId(int userId);
     public void payment(Payment payment);
+    public Payment paymentDetails();
+    public List<Payment> transactionHistory(int id);
+    public List<Beneficiary>getBeneficiaryDetails(int id);
+    public int getUserAccountBalance(int id);
+    public int getBeneficiaryAccountBalance(int id);
+    public void updateSenderAccountBalance(int id,int balance);
+    public void updateBeneficiaryAccountBalance(int id,int balance);
 }

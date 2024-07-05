@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.fundtransfer.model.TranferAmountPojo"%>
+<%@ page import="com.chainsys.fundtransfer.model.Payment"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,15 +46,15 @@
 </head>
 <body>
 <%
-TranferAmountPojo userAccount = (TranferAmountPojo) request.getAttribute("transferid");
+Payment paymentProcess = (Payment) request.getAttribute("Payment");
 	%>
 <div class="receipt">
     <div class="icon">✔</div>
     <h1>Payment Successful!</h1>
-    <p>Transaction Number: <%=userAccount.getTransferId() %></p>
+    <p>Transaction Number: <%=paymentProcess.getTransferId() %></p>
     <hr>
     <div class="details">
-        <p>Amount Paid: ₹ <%=userAccount.getAmount()  %></p>
+        <p>Amount Paid: ₹ <%=paymentProcess.getAmount()  %></p>
     </div>
 </div>
 </body>

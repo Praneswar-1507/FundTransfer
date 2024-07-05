@@ -80,17 +80,17 @@ table.table td a {
 }
 
 table.table td a.add {
-	/* Removed color property */
+	
 	
 }
 
 table.table td a.edit {
-	/* Removed color property */
+
 	
 }
 
 table.table td form.delete button {
-	/* Remove custom styling */
+	
 	
 }
 

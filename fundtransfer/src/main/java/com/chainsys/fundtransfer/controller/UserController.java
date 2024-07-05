@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.fundtransfer.dao.UserDAO;
 import com.chainsys.fundtransfer.model.BankAccount;
+import com.chainsys.fundtransfer.model.Beneficiary;
 import com.chainsys.fundtransfer.model.User;
 
 
@@ -54,9 +55,11 @@ if(user!=null) {
 	session.setAttribute("email", user.getEmail());
 	session.setAttribute("username", user.getUsername());
 	session.setAttribute("id",user.getId());
-	String accountId=userdao.getAccountId(user.getId());
-	session.setAttribute("accountid",accountId);
-	System.out.println(accountId);
+//    String accountId=userdao.getAccountId(user.getId());
+//    session.setAttribute("accountId",accountId);
+	List<Beneficiary> beneficiary=userdao.getBeneficiaryDetails(user.getId());
+	System.out.println(beneficiary);
+	session.setAttribute("beneficiarydetails", beneficiary);
 	if(email.endsWith("admin@fastpay.com"))
 	{
 		List<BankAccount> userData=  userdao.read();
@@ -66,6 +69,7 @@ if(user!=null) {
 	}
 	else
 	{
+
 		return "redirect:/home1.jsp";
 	}
 }

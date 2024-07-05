@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.chainsys.fundtransfer.mapper.BeneficiaryMapper;
+import com.chainsys.fundtransfer.mapper.PaymentMapper;
 import com.chainsys.fundtransfer.mapper.UserAccountDetailsMapper;
 import com.chainsys.fundtransfer.mapper.UserMapper;
 import com.chainsys.fundtransfer.model.BankAccount;
@@ -138,6 +139,56 @@ public  User login(String email,String password) {
     	 String insertQuery = "INSERT INTO Transfers(user_ID,sender_Account_ID,Recipient_ID,IFSC_code,transfer_Type,transfer_Date,transfer_Amount)  VALUES(?,?,?,?,?,?,?)";
          jdbctemplate.update(insertQuery,payment.getUserId(),payment.getSendAccountNo(),payment.getRecepientAccountNo(),payment.getiFSC(),payment.getTransfertype(),currentDate,payment.getAmount());		
     }
+    public Payment paymentDetails() {
+        String paymentQuery = "SELECT * FROM Transfers ORDER BY transfer_Date DESC LIMIT 1";
+
+    
+        return  (Payment) jdbctemplate.queryForObject(paymentQuery, new PaymentMapper());
+    }
+    public List<Payment> transactionHistory(int id) 
+    {
+    	String readusers="Select * from Transfers where user_ID=? " ;
+    	return jdbctemplate.query(readusers,new PaymentMapper(),id );
+    }
+    public List<Beneficiary> getBeneficiaryDetails(int userId) {
+        String query = "SELECT beneficiary_ID,beneficiary_name, beneficiary_accountID, ifsccode FROM beneficiary WHERE is_deleted=0 and user_ID=?";
+        return jdbctemplate.query(query, (rs, rowNum) -> {
+            Beneficiary beneficiary = new Beneficiary();
+            beneficiary.setBeneficiaryId(rs.getInt("beneficiary_ID"));
+            beneficiary.setBeneficiaryName(rs.getString("beneficiary_name"));
+            beneficiary.setBeneficiaryAccountId(rs.getString("beneficiary_accountID"));
+            beneficiary.setIfsccode(rs.getString("ifsccode"));
+            return beneficiary;
+        }, userId);
+    }
+    public int getUserAccountBalance(int id)
+    {
+    	String accountBalance="SELECT account_Balance from Accounts where user_ID=?";
+    	return jdbctemplate.queryForObject(accountBalance, int.class, id);
+    }
+    public int getBeneficiaryAccountBalance(int id)
+    {
+    	String accountBalance="SELECT account_Balance from beneficiary where beneficiary_ID=?";
+    	return jdbctemplate.queryForObject(accountBalance, int.class, id);
+    	
+    }
+    public void updateSenderAccountBalance(int id,int balance)
+    {
+    	String query="update Accounts set account_Balance=? where user_ID=? ";
+    	Object[] params= {balance,id};
+    	int rows=jdbctemplate.update(query, params);
+    	
+    }
+    public void updateBeneficiaryAccountBalance(int id,int balance)
+    {
+    	String query="update beneficiary set account_balance=? where beneficiary_ID=? ";
+    	Object[] params= {balance,id};
+    	int rows=jdbctemplate.update(query, params);
+    	
+    }
+   
+
+
 
 
 }

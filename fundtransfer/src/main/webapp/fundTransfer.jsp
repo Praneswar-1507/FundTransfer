@@ -93,7 +93,7 @@ select {
             <input type="hidden" value="<%=session.getAttribute("id") %>" name="fundId">
 
             <label for="transferType">Sender Account:</label> 
-            <input type="text" id="transferType" name="senderAccount" pattern="^[0-9]{12}$" value="<%=session.getAttribute("accountid") %>">
+            <input type="text" id="transferType" name="senderAccount" pattern="^[0-9]{12}$" value="<%=session.getAttribute("acc") %>">
             
             <label for="receiverAccount">Receiver Account:</label> 
             <input type="text" id="receiverAccount" name="receiverAccount" pattern="^[0-9]{12}$">
@@ -108,7 +108,7 @@ select {
             </select> 
             
             <label for="amount">Amount:</label> 
-            <input type="number" id="amount" name="amount" min="0" max="200000">
+            <input type="number" id="amount" name="amount" min="0" max="25000">
             
             <div id="error-message" class="error"></div>
             

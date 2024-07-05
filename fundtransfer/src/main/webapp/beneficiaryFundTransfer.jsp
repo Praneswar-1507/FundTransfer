@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="com.fundtransfer.model.Beneficiary"%>
-<%@ page import="com.fundtransfer.model.BankAccountPojo"%>
-<%@ page import="com.fundtransfer.model.FundTransferPojo"%>
-<%@ page import="com.fundtransfer.util.Jdbc"%>
+<%@ page import="java.util.List"%>
+<%@ page import="com.chainsys.fundtransfer.model.Beneficiary"%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -126,22 +124,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <body>
     <div class="container">
         <h2>Fund Transfer</h2>
-        <form action="AmountTransfer" method="post" onsubmit="return validateForm()">
+        <form action="beneficiaryfundtransfer" method="post" onsubmit="return validateForm()">
             <% 
-                ArrayList<Beneficiary> beneficiaryList = (ArrayList<Beneficiary>) session.getAttribute("beneficiarydetails"); 
+                List<Beneficiary> beneficiaryList = (List<Beneficiary>) session.getAttribute("beneficiarydetails"); 
             %>
 
             <label for="accountId">Account ID:</label> <input type="text"
                 id="accountId" name="senderAccount"
-                value="<%= request.getParameter("accountId") %>" required>
+                value="<%=session.getAttribute("accountid") %>" required>
 
-            <% 
-                FundTransferPojo userId = (FundTransferPojo) session.getAttribute("user");
-                Jdbc crud = new Jdbc(); 
-                BankAccountPojo userAccount = crud.read1(userId.getId());
-            %>
-            <input type="hidden" id="currentBalance" value="<%= userAccount.getAccountBalance() %>">
-            <input type="hidden" value="<%= userId.getId() %>" name="fundId">
+           
+            <input type="hidden" id="currentBalance" value="balance">
+            <input type="hidden" value="<%=session.getAttribute("id") %>" name="fundId">
 
             <label for="beneficiary">Beneficiary Name:</label> 
             <select id="beneficiary" name="beneficiaryName">
@@ -153,13 +147,15 @@ document.addEventListener("DOMContentLoaded", function() {
                     data-id="<%= beneficiary.getBeneficiaryId() %>">
                     <%= beneficiary.getBeneficiaryName() %>
                 </option>
+                           
+                
                 <% } %>
             </select> 
-            <input type="hidden" id="beneficiaryID" name="beneficiaryId">
+             <input type="hidden" id="beneficiaryID" name="beneficiaryId">
             <input type="hidden" id="beneficiaryAccountId" name="receiverAccount">
             <input type="hidden" id="receiverIfscCode" name="ifsc"> 
             <label for="transferType">Transfer Type:</label> 
-            <select id="transferType" name="type">
+            <select id="transferType" name=transferType>
                 <option value="NEFT">NEFT</option>
                 <option value="RTGS">RTGS</option>
             </select> 

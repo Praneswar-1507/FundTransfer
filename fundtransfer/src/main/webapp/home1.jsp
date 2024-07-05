@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ page import="com.chainsys.fundtransfer.dao.*"%>
+	<%@ page  import="org.springframework.context.ApplicationContext"%> 
+<%@ page  import="org.springframework.web.context.WebApplicationContext"%>
+<%@ page  import="org.springframework.web.context.support.WebApplicationContextUtils"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +26,7 @@ body {
 	min-height: 100vh;
 }
 
-/* Navigation Bar */
+
 .navbar {
 	background-color: #333;
 	color: #fff;
@@ -73,7 +77,7 @@ body {
 	border-radius: 5px;
 }
 
-/* Login Button */
+
 .login-btn {
 	background-color: #337ab7;
 	color: #fff;
@@ -134,7 +138,7 @@ main {
 	background-color: #23527c;
 }
 
-/* Footer */
+
 footer {
 	background-color: #333;
 	color: #fff;
@@ -164,8 +168,6 @@ footer {
 </style>
 </head>
 <body>
-	<!-- Navigation Bar -->
-	<!-- Navigation Bar -->
 	<nav class="navbar">
 		<a href="#" class="logo"> <img src="images/fastpay.jpg" alt="FastPay Logo">
 		</a>
@@ -176,11 +178,14 @@ footer {
              session.getAttribute("username"); 
     
     %>
+   
 		 	<li><form action="userprofile" method="post">
-				<input type="hidden" name="action" value="login2"> <input
+				<input type="hidden" name="action" value="login2"> 
+	
+				<input
 					type="hidden" value="<%=session.getAttribute("id")%>" name="id"> 
 		 	<button type="submit" class="login-btn"><%=session.getAttribute("username")%></button></li>
-		
+		</form>
 			<li><a href="#">Contact</a></li>
 			<li>
 				<form action="home.jsp" method="post">
@@ -191,7 +196,7 @@ footer {
 		</ul>
 	</nav>
 
-	<!-- Main Content Section -->
+	
 	<main>
 		<div class="left-content">
 			<div class="intro">
@@ -205,7 +210,7 @@ footer {
 		</div>
 	</main>
 
-	<!-- Footer Section -->
+	
 	<footer>
 		<p>© 2024 Fastpay. All rights reserved.</p>
 		<div class="social-media">

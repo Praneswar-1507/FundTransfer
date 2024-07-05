@@ -29,16 +29,15 @@ body {
 
 .card {
 	position: relative;
-	width: 200px; /* Adjust as needed */
-	height: 250px; /* Adjust to accommodate text */
+	width: 200px;
+	height: 250px;
 	padding: 20px;
 	background-color: #fff;
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	text-align: center;
-	margin-bottom: 20px; /* Spacing between cards */
+	margin-bottom: 20px;
 	transition: transform 0.3s;
-	/* Smooth transition for the hover effect */
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -51,26 +50,25 @@ body {
 
 .card img {
 	width: 100%;
-	height: 80%; /* Adjust the image height */
+	height: 80%; 
 	object-fit: cover;
-	/* Ensures the image covers the entire area of the card */
 	border-radius: 8px;
-	/* Keeps the border radius consistent with the card */
+
 }
 
 .card-header {
-	background-color: #3498db; /* Change the color code as needed */
-	color: #fff; /* Text color */
-	padding: 10px; /* Adjust padding as needed */
-	border-top-left-radius: 8px; /* Rounded corners for top */
-	border-top-right-radius: 8px; /* Rounded corners for top */
+	background-color: #3498db; 
+	color: #fff; 
+	padding: 10px; 
+	border-top-left-radius: 8px; 
+	border-top-right-radius: 8px;
 }
 
 .card-text {
-	margin-top: 15px; /* Adjust the margin as needed */
+	margin-top: 15px;
 }
 
-/* Remove default anchor styles */
+
 a {
 	text-decoration: none;
 	color: inherit;
