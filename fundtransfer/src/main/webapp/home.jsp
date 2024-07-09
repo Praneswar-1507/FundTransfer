@@ -20,7 +20,7 @@ body {
 	min-height: 100vh;
 }
 
-/* Navigation Bar */
+
 .navbar {
 	background-color: #333;
 	color: #fff;
@@ -71,7 +71,7 @@ body {
 	border-radius: 5px;
 }
 
-/* Login Button */
+
 .login-btn {
 	background-color: #337ab7;
 	color: #fff;
@@ -161,7 +161,14 @@ footer {
 </style>
 </head>
 <body>
-
+<% 
+if(session == null){
+response.sendRedirect("login.jsp");
+}
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+response.setHeader("Pragma", "no-cache"); 
+response.setHeader("Expires", "0");
+%>
 	<nav class="navbar">
 		<a href="#" class="logo"> <img src="images/fastpay.jpg" alt="FastPay Logo">
 		</a>

@@ -80,7 +80,7 @@ a {
 	<div class="container">
 		<div class="box">
 			<a
-				href="fundTransfer.jsp">
+				href="selectedfundtransfer?userId=<%=session.getAttribute("id")%>">
 				<div class="card">
 					<div class="card-header">QuickTransfer</div>
 					<div class="card-text"></div>
@@ -89,7 +89,7 @@ a {
 		</div>
 		<div class="box">
 			<a
-				href="beneficiaryFundTransfer.jsp">
+				href="selectedbeneficiaryfundtransfer?userId=<%=session.getAttribute("id")%>">
 				<div class="card">
 					<div class="card-header">PayToBeneficiary</div>
 					<div class="card-text"></div>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.chainsys.fundtransfer.dao.UserDAO;
 import com.chainsys.fundtransfer.model.BankAccount;
 import com.chainsys.fundtransfer.model.Payment;
+import com.chainsys.fundtransfer.validation.FundTransferValidation;
 
 @Controller
 public class PaymentController {
@@ -21,15 +22,41 @@ public class PaymentController {
 	UserDAO userdao;
 	@Autowired
 	BankAccount bankaccount;
-//	@PostMapping("selectedfundtransfer")
-//	public String getUserAccountId()
-//	{
-//		return "fundTransfer.jsp";
-//		
-//	}
+	@Autowired
+	FundTransferValidation fundtransfervalidation;
+
+	@GetMapping("selectedfundtransfer")
+	public String getUserAccountId(@RequestParam("userId") int userId, Model model) {
+		String accountId = userdao.getAccountId(userId);
+		model.addAttribute("accountId", accountId);
+		return "fundTransfer.jsp";
+
+	}
+
+	@GetMapping("selectedbeneficiaryfundtransfer")
+	public String getAccountId(@RequestParam("userId") int userId, Model model) {
+		String accountId = userdao.getAccountId(userId);
+		System.out.println(accountId);
+		model.addAttribute("accountId", accountId);
+		return "beneficiaryFundTransfer.jsp";
+
+	}
+	@PostMapping("deposit")
+	public String Deposit(@RequestParam("accountId" )int userId,@RequestParam("amount" )int amount,Model model)
+	{
+		int balance = userdao.getUserAccountBalance(userId);
+		int addamount=balance+amount;
+		userdao.updateSenderAccountBalance(userId, addamount);
+		BankAccount bankaccount = userdao.getUserDetails(userId);
+		model.addAttribute("userprofiledetails", bankaccount);
+		return "userProfile.jsp";
+		
+	}
 	@PostMapping("fundtransfer")
-	public String Payment(@RequestParam("senderAccount")String senderAccountId,@RequestParam("receiverAccount")String receiverAccountId,@RequestParam("ifsc")String ifsc,@RequestParam("transferType")String transferType,@RequestParam("amount")int amount,@RequestParam("fundId")int id,Model model)
-	{
+	public String Payment(@RequestParam("senderAccount") String senderAccountId,
+			@RequestParam("receiverAccount") String receiverAccountId, @RequestParam("ifsc") String ifsc,
+			@RequestParam("transferType") String transferType, @RequestParam("amount") int amount,
+			@RequestParam("fundId") int id, Model model) {
 		payment.setSendAccountNo(senderAccountId);
 		payment.setRecepientAccountNo(receiverAccountId);
 		payment.setiFSC(ifsc);
@@ -37,32 +64,38 @@ public class PaymentController {
 		payment.setTransfertype(transferType);
 		payment.setUserId(id);
 		userdao.payment(payment);
-		int balance=userdao.getUserAccountBalance(id);
-
-		if (amount >balance ) {
-
-			return "home.jsp";
+		int balance = userdao.getUserAccountBalance(id);
+		if (amount > balance) {
+			String accountId = userdao.getAccountId(id);
+			model.addAttribute("accountId", accountId);
+			 model.addAttribute("error", "Insufficient balance");
+		        return "fundTransfer.jsp";
 		}
-
-		int remainingAmount =balance-amount;
-		 System.out.println("remainingbalance:"+balance);
+		else
+		{
+		int remainingAmount = balance - amount;
+		System.out.println("remainingbalance:" + balance);
 		userdao.updateSenderAccountBalance(id, remainingAmount);
-		Payment payment=userdao.paymentDetails();
-		model.addAttribute("Payment",payment);
+		Payment payment = userdao.paymentDetails();
+		model.addAttribute("Payment", payment);
 		return "paymentSuccess.jsp";
-		
+		}
+
 	}
+
 	@GetMapping("TransactionHistory")
-	public String transactionHistory(@RequestParam("userId")int id,Model model)
-	{
-		List<Payment> payment=userdao.transactionHistory(id);
-		model.addAttribute("payment",payment);
+	public String transactionHistory(@RequestParam("userId") int id, Model model) {
+		List<Payment> payment = userdao.transactionHistory(id);
+		model.addAttribute("payment", payment);
 		return "transactionHistory.jsp";
-		
+
 	}
+
 	@PostMapping("beneficiaryfundtransfer")
-	public String beneficiaryPayment(@RequestParam("senderAccount")String senderAccountId,@RequestParam("receiverAccount")String receiverAccountId,@RequestParam("ifsc")String ifsc,@RequestParam("transferType")String transferType,@RequestParam("amount")int amount,@RequestParam("fundId")int id,@RequestParam("beneficiaryId")int beneficiaryId,Model model)
-	{
+	public String beneficiaryPayment(@RequestParam("senderAccount") String senderAccountId,
+			@RequestParam("receiverAccount") String receiverAccountId, @RequestParam("ifsc") String ifsc,
+			@RequestParam("transferType") String transferType, @RequestParam("amount") int amount,
+			@RequestParam("fundId") int id, @RequestParam("beneficiaryId") int beneficiaryId, Model model) {
 		payment.setSendAccountNo(senderAccountId);
 		payment.setRecepientAccountNo(receiverAccountId);
 		payment.setiFSC(ifsc);
@@ -70,24 +103,26 @@ public class PaymentController {
 		payment.setTransfertype(transferType);
 		payment.setUserId(id);
 		userdao.payment(payment);
-		int balance=userdao.getUserAccountBalance(id);
+		int balance = userdao.getUserAccountBalance(id);
 		System.out.println(beneficiaryId);
-         int beneficiaryBalance=userdao.getBeneficiaryAccountBalance(beneficiaryId);
-		if (amount >balance ) {
-
-			return "home.jsp";
+		int beneficiaryBalance = userdao.getBeneficiaryAccountBalance(beneficiaryId);
+		if (amount > balance) {
+			String accountId = userdao.getAccountId(id);
+			model.addAttribute("accountId", accountId);
+			 model.addAttribute("error", "Insufficient balance");
+		        return "beneficiaryFundTransfer.jsp";
 		}
-System.out.println("beneficiaryBalance"+beneficiaryBalance);
-
-		int remainingAmount =balance-amount;
-		int beneficiaryRemainingAmount=beneficiaryBalance+amount;
-		 System.out.println("remainingbalance:"+beneficiaryRemainingAmount);
-		 userdao.updateSenderAccountBalance(id, remainingAmount);
-		 userdao.updateBeneficiaryAccountBalance(beneficiaryId, beneficiaryRemainingAmount);
-		Payment payment=userdao.paymentDetails();
-		model.addAttribute("Payment",payment);
-		return "paymentSuccess.jsp";
 		
+
+		int remainingAmount = balance - amount;
+		int beneficiaryRemainingAmount = beneficiaryBalance + amount;
+		System.out.println("remainingbalance:" + beneficiaryRemainingAmount);
+		userdao.updateSenderAccountBalance(id, remainingAmount);
+		userdao.updateBeneficiaryAccountBalance(beneficiaryId, beneficiaryRemainingAmount);
+		Payment payment = userdao.paymentDetails();
+		model.addAttribute("Payment", payment);
+		return "paymentSuccess.jsp";
+
 	}
-	
+
 }

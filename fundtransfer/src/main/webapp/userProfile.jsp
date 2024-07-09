@@ -300,7 +300,7 @@ body {
 			<button class="close" onclick="closePopup('depositPopup')"
 				aria-label="Close popup">&times;</button>
 			<h3>Deposit Money</h3>
-			<form action="BankAccount" method="post">
+			<form action="deposit" method="post">
 				<input type="number" name="amount" required
 					style="width: 80%; padding: 10px;" Enter amount to
 					deposit" required> <input type="hidden" name="action"

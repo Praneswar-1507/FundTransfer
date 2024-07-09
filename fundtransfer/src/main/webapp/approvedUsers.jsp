@@ -162,7 +162,7 @@ table.table td .add {
 						</h2>
 					</div>
 					<div class="col-sm-4"></div>
-					<form action="home.jsp" method="post">
+					<form action="logout" method="post">
 							<button type="submit" class="btn btn-danger pull-right">Logout</button>
 						</form>
 				</div>

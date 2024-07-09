@@ -11,6 +11,10 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     integrity="sha512-Fo3rlrZj/k7ujTnH2N2QZnBjl0XKq8jn59xN2ePv+I1fdk0/5R1d6Q4B5sH8p+E4GZpv6/OiPq4sMz7MWZsPdA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css" rel="stylesheet">
+
 <style>
 body {
     font-family: 'Arial', sans-serif;
@@ -75,8 +79,14 @@ body {
     margin-bottom: 20px;
 }
 
-.search-container input[type="text"] {
-    width: 100%;
+.search-container form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-container input[type="date"] {
+    width: 180px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -112,7 +122,7 @@ th {
             </h2>
         </div>
         <ul>
-            <li><a href="userprofile.jsp"><i class="fas fa-key"></i>UserProfile</a></li>
+            <li><a href="userProfile.jsp"><i class="fas fa-key"></i>UserProfile</a></li>
             <li><a href="#" role="button" onclick="openPopup()"
                 aria-label="Deposit"> <i class="fas fa-user"></i> Deposit
             </a></li>
@@ -123,12 +133,12 @@ th {
 
     <div class="table-container">
         <div class="search-container">
-            <form action="transactionHistory" method="get">
-                <input type="text" name="searchQuery" placeholder="Search for transactions...">
-                <input type="submit" value="Search">
+            <form>
+                <input type="date" id="startDate" name="startDate" placeholder="Start Date">
+                <input type="date" id="endDate" name="endDate" placeholder="End Date">
             </form>
         </div>
-        <table>
+        <table id="transactionTable">
             <thead>
                 <tr>
                     <th>TransferId</th>
@@ -157,5 +167,59 @@ th {
         </table>
     </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var table = $('#transactionTable').DataTable({
+            responsive: true,
+            dom: 'Blfrtip',
+            buttons: [
+                { extend: 'copy', className: 'btn btn-primary my-3' },
+                { extend: 'csv', className: 'btn btn-primary' },
+                { extend: 'excel', className: 'btn btn-primary' },
+                { extend: 'pdf', className: 'btn btn-primary' },
+                { extend: 'print', className: 'btn btn-primary' }
+            ],
+            lengthMenu: [10, 25, 50, 100],
+            language: {
+                paginate: {
+                    previous: "Previous",
+                    next: "Next"
+                }
+            },
+            pagingType: "full_numbers"
+        });
+
+        function filterByDate(settings, data, dataIndex) {
+            var min = $('#startDate').val();
+            var max = $('#endDate').val();
+            var date = data[3]; 
+
+            if ((min === "" && max === "") || 
+                (min === "" && date <= max) ||
+                (min <= date && max === "") ||
+                (min <= date && date <= max)) {
+                return true;
+            }
+            return false;
+        }
+
+        $('#startDate, #endDate').change(function() {
+            table.draw();
+        });
+
+        $.fn.dataTable.ext.search.push(filterByDate);
+    });
+</script>
 </body>
 </html>

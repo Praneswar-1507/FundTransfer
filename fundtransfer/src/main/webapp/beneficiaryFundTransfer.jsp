@@ -1,8 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List"%>
 <%@ page import="com.chainsys.fundtransfer.model.Beneficiary"%>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -127,41 +125,48 @@ document.addEventListener("DOMContentLoaded", function() {
         <form action="beneficiaryfundtransfer" method="post" onsubmit="return validateForm()">
             <% 
                 List<Beneficiary> beneficiaryList = (List<Beneficiary>) session.getAttribute("beneficiarydetails"); 
+                Integer balance = (Integer) request.getAttribute("balance"); // Get balance from request attribute
             %>
 
-            <label for="accountId">Account ID:</label> <input type="text"
-                id="accountId" name="senderAccount"
-                value="<%=session.getAttribute("accountid") %>" required>
+            <label for="accountId">Account ID:</label> 
+            <input type="text" id="accountId" name="senderAccount" value="<%=request.getAttribute("accountId") %>" required>
 
-           
-            <input type="hidden" id="currentBalance" value="balance">
+            <input type="hidden" id="currentBalance" value="<%= balance %>">
             <input type="hidden" value="<%=session.getAttribute("id") %>" name="fundId">
 
             <label for="beneficiary">Beneficiary Name:</label> 
-            <select id="beneficiary" name="beneficiaryName">
+            <select id="beneficiary" name="beneficiaryName" onchange="updateBeneficiaryAccountId()">
                 <option value="" disabled selected>Select Beneficiary</option>
                 <% for (Beneficiary beneficiary : beneficiaryList) { %>
-                <option value="<%= beneficiary.getBeneficiaryName() %>"
-                    data-accountid="<%= beneficiary.getBeneficiaryAccountId() %>"
-                    data-ifsc="<%= beneficiary.getIfsccode() %>"
-                    data-id="<%= beneficiary.getBeneficiaryId() %>">
-                    <%= beneficiary.getBeneficiaryName() %>
-                </option>
-                           
-                
+                    <option value="<%= beneficiary.getBeneficiaryName() %>"
+                        data-accountid="<%= beneficiary.getBeneficiaryAccountId() %>"
+                        data-ifsc="<%= beneficiary.getIfsccode() %>"
+                        data-id="<%= beneficiary.getBeneficiaryId() %>">
+                        <%= beneficiary.getBeneficiaryName() %>
+                    </option>
                 <% } %>
             </select> 
-             <input type="hidden" id="beneficiaryID" name="beneficiaryId">
+            
+            <input type="hidden" id="beneficiaryID" name="beneficiaryId">
             <input type="hidden" id="beneficiaryAccountId" name="receiverAccount">
             <input type="hidden" id="receiverIfscCode" name="ifsc"> 
+
             <label for="transferType">Transfer Type:</label> 
-            <select id="transferType" name=transferType>
+            <select id="transferType" name="transferType">
                 <option value="NEFT">NEFT</option>
                 <option value="RTGS">RTGS</option>
             </select> 
+
             <label for="amount">Amount:</label> 
             <input type="number" id="amount" name="amount" min="0" max="200000" required>
-            <div id="error-message" class="error"></div>
+            
+            <div id="error-message" class="error">
+                <%-- Display error message if present --%>
+                <c:if test="${not empty error}">
+                    ${error}
+                </c:if>
+            </div>
+
             <input type="hidden" name="action" value="beneficiaryfundtransfer">
             <input type="submit" value="Transfer">
         </form>

@@ -168,6 +168,14 @@ footer {
 </style>
 </head>
 <body>
+<% 
+if(session.getAttribute("username")== null){
+response.sendRedirect("login.jsp");
+}
+  response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+response.setHeader("Pragma", "no-cache"); 
+response.setHeader("Expires", "0");
+%>
 	<nav class="navbar">
 		<a href="#" class="logo"> <img src="images/fastpay.jpg" alt="FastPay Logo">
 		</a>
@@ -188,8 +196,7 @@ footer {
 		</form>
 			<li><a href="#">Contact</a></li>
 			<li>
-				<form action="home.jsp" method="post">
-					<input type="hidden" name="login" value="login1">
+				<form action="logout" method="post">
 					<button type="submit" class="login-btn">Logout</button>
 				</form>
 			</li>

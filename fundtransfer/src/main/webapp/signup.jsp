@@ -1,11 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Page</title>
+<title>Signup Page</title>
 <style>
 body {
 	font-family: Arial, sans-serif;
@@ -69,9 +68,10 @@ body {
 	background-color: #0056b3;
 }
 
-.form-group .error-message {
-	flex: 2;
+.error-message {
 	color: red;
+	text-align: center;
+	margin-bottom: 20px;
 }
 
 .signup-link {
@@ -92,43 +92,44 @@ body {
 <body>
 	<div class="login-container">
 		<h2>Signup</h2>
+		
+	
 		<form action="register" method="post">
 			<div class="form-group">
-				<label for="username">Username:</label> <input type="text"
-					id="username" name="username" pattern="[A-Za-z]{4,}" required>
+				<label for="username">Username:</label> 
+				<input type="text" id="username" name="username" required>
 			</div>
 			<div class="form-group">
-				<label for="email">Email:</label> <input type="email" id="email"
-					name="email" required>
+				<label for="email">Email:</label> 
+				<input type="email" id="email" name="email" required>
 			</div>
 			<div class="form-group">
-				<label for="password">Password:</label> <input type="password"
-					id="password" name="password"
-					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}"
-					required>
+				<label for="password">Password:</label> 
+				<input type="password" id="password" name="password"
+					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}" required>
 			</div>
 			<div class="form-group">
-				<label for="password">ConfirmPassword:</label> <input
-					type="password" id="password" name="confirmpassword"
+				<label for="confirmpassword">Confirm Password:</label> 
+				<input type="password" id="confirmpassword" name="confirmpassword"
 					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}" required>
 			</div>
 			<div class="form-group">
-				<input type="checkbox" id="remember" name="remember"> <label
-					for="remember" class="remember-me">Remember me</label>
+				<input type="checkbox" id="remember" name="remember"> 
+				<label for="remember" class="remember-me">Remember me</label>
 			</div>
+				<% if (request.getAttribute("error") != null) { %>
+        <div class="error-message"><%= request.getAttribute("error") %></div>
+        <% } %>
+			
 			<div class="form-group">
 				<input type="hidden" name="action" value="register">
 				<button type="submit">Signup</button>
 			</div>
-			<div class="form-group error-message">
-				<%
-				String errorMessage = (String) request.getAttribute("errorMessage");
-				if (errorMessage != null) {
-					out.println(errorMessage);
-				}
-				%>
-			</div>
 		</form>
+
+		<div class="signup-link">
+			Already have an account? <a href="login.jsp">Login here</a>
+		</div>
 	</div>
 </body>
 </html>
