@@ -23,9 +23,9 @@ public class BeneficiaryController {
 	UserDAO userdao;
 
 	@PostMapping("addbeneficiary")
-	public String addBeneficiary(@RequestParam("beneficiaryName") String beneficiaryName,
-			@RequestParam("accountID") String beneficiaryAccountId, @RequestParam("ifscCode") String ifscCode,
-			@RequestParam("userId") int id,HttpSession session, Model model) {
+	public String addBeneficiary(@RequestParam("addBeneficiaryName") String beneficiaryName,
+			@RequestParam("addBeneficiaryAccountId") String beneficiaryAccountId, @RequestParam("addBeneficiaryIfscCode") String ifscCode,
+			@RequestParam("id") int id,HttpSession session, Model model) {
 		beneficiary.setBeneficiaryName(beneficiaryName);
 		beneficiary.setBeneficiaryAccountId(beneficiaryAccountId);
 		beneficiary.setIfsccode(ifscCode);
@@ -34,9 +34,11 @@ public class BeneficiaryController {
 		List<Beneficiary> beneficiary = userdao.getBeneficiaryDetails(id);
 		System.out.println(beneficiary);
 		session.setAttribute("beneficiarydetails", beneficiary);
-		BankAccount bankaccount = userdao.getUserDetails(id);
-		model.addAttribute("userprofiledetails", bankaccount);
-		return "userProfile.jsp";
+		List<Beneficiary> beneficiaryDetails = userdao.viewBeneficiary(id);
+
+		model.addAttribute("beneficiarydetails", beneficiaryDetails);
+		return "viewBeneficiary.jsp";
+
 	}
 
 	@GetMapping("viewbeneficiary")

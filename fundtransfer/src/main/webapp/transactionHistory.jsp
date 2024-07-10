@@ -111,6 +111,18 @@ th {
     background-color: #2c3e50;
     color: white;
 }
+
+.btn-primary {
+    background-color: #2c3e50 !important;
+    color: white !important;
+    border-color: #2c3e50 !important;
+}
+
+.btn-primary:hover {
+    background-color: #34495e !important; /* darker shade for hover effect */
+    color: white !important;
+    border-color: #34495e !important;
+}
 </style>
 </head>
 <body>

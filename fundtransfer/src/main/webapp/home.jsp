@@ -161,28 +161,54 @@ footer {
 </style>
 </head>
 <body>
-<% 
+ <% 
 if(session == null){
 response.sendRedirect("login.jsp");
 }
   response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
 response.setHeader("Pragma", "no-cache"); 
 response.setHeader("Expires", "0");
-%>
+%> 
 	<nav class="navbar">
 		<a href="#" class="logo"> <img src="images/fastpay.jpg" alt="FastPay Logo">
 		</a>
 		<ul class="nav-items">
+		 <% if (session.getAttribute("id") != null) { %>
 			<li><a href="#">Home</a></li>
 			<li><a href="#">About</a></li>
 			<li><a href="#">Contact</a></li>
+			<% 
+             session.getAttribute("username"); 
+    
+    %>
+   
+		 	<li><form action="userprofile" method="post">
+				<input type="hidden" name="action" value="login2"> 
+	
+				<input
+					type="hidden" value="<%=session.getAttribute("id")%>" name="id"> 
+		 	<button type="submit" class="login-btn"><%=session.getAttribute("username")%></button></li>
+		</form>
+			
 			<li>
-				<form action="login.jsp" method="get">
-					<input type="hidden" name="login" value="login1">
+				<form action="logout" method="post">
+					<button type="submit" class="login-btn">Logout</button>
+				</form>
+			</li>
+		</ul>
+		  <% } else { %>
+		  <li><a href="#">Home</a></li>
+			<li><a href="#">About</a></li>
+			<li><a href="#">Contact</a></li>
+			
+			
+			<li>
+				<form action="login.jsp" method="post">
 					<button type="submit" class="login-btn">Login</button>
 				</form>
 			</li>
 		</ul>
+		  <% } %>
 	</nav>
 
 
@@ -191,7 +217,12 @@ response.setHeader("Expires", "0");
 			<div class="intro">
 				<h1>Welcome to Fast pay</h1>
 				<p>Your trusted platform for secure money transfers.</p>
-
+				 <% if (session.getAttribute("id") != null) { %>
+                   <form action="bankAccount.jsp" method="post">
+					<input type="hidden" name="login" value="createAccount">
+					<button type="submit">Create Account</button>
+				</form>
+				  <% } %>
 			</div>
 		</div>
 	</main>

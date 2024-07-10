@@ -10,16 +10,115 @@
             margin: 0;
             padding: 0;
             background-color: #f2f2f2;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 180px;
+            background-color: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            transition: width 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #fff; /* Changed sidebar header text color to white */
+        }
+
+        .sidebar.collapsed h2 {
+            display: none;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px 0;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li a i {
+            margin-right: 10px;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .has-submenu:hover .submenu {
+            display: block;
+        }
+
+        .submenu {
+            display: none;
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .submenu li {
+            padding: 10px 0;
+        }
+
+        .submenu li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .submenu li a:hover {
+            background-color: #34495e;
+        }
+
+        .content {
+            margin-left: 200px;
+            padding: 20px;
+            width: calc(100% - 200px);
         }
 
         .container {
-            width: 50%;
+            width: 60%;
             margin: 0 auto;
             padding: 20px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 50px;
+            margin-top: 30px; /* Adjusted for a higher position */
         }
 
         h2 {
@@ -52,7 +151,7 @@
         }
 
         input[type="submit"] {
-            background-color: #4CAF50;
+            background-color: #2c3e50; /* Sidebar color */
             color: white;
             padding: 15px 20px;
             border: none;
@@ -63,7 +162,7 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #34495e; /* Darker shade for hover */
         }
 
         select {
@@ -83,40 +182,57 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Fund Transfer Form</h2>
-        <form action="fundtransfer" method="post">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>
+                <i class="fas fa-piggy-bank"></i> fastpay
+            </h2>
+        </div>
+        <ul>
+            <li><a href="selectedfundtransfer?userId=<%=session.getAttribute("id")%>"><i class="fas fa-exchange-alt"></i> Quick Transfer</a></li>
+            <li><a href="selectedbeneficiaryfundtransfer?userId=<%=session.getAttribute("id")%>"><i class="fas fa-user-friends"></i> Pay to Beneficiary</a></li>
+            <li><a href="#" onclick="openPopup('depositPopup')"><i class="fas fa-coins"></i> Deposit</a></li>
+            <li><a href="TransactionHistory?userId=<%=session.getAttribute("id")%>"><i class="fas fa-history"></i> Transaction History</a></li>
+            <li><a href="viewbeneficiary?userId=<%=session.getAttribute("id")%>"><i class="fas fa-history"></i>Beneficiary</a></li>
+            <li><a href="viewmoneyrequest?userId=<%=session.getAttribute("id")%>"><i class="fas fa-comments-dollar"></i> Requests</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="container">
+            <h2>Fund Transfer Form</h2>
+            <form action="fundtransfer" method="post">
 
-            <input type="hidden" value="<%=session.getAttribute("id") %>" name="fundId">
+                <input type="hidden" value="<%=session.getAttribute("id") %>" name="fundId">
 
-            <label for="senderAccount">Sender Account:</label>
-            <input type="text" id="senderAccount" name="senderAccount" pattern="^[0-9]{12}$" value="<%=request.getAttribute("accountId") %>">
+                <label for="senderAccount">Sender Account:</label>
+                <input type="text" id="senderAccount" name="senderAccount" pattern="^[0-9]{12}$" value="<%=request.getAttribute("accountId") %>">
 
-            <label for="receiverAccount">Receiver Account:</label>
-            <input type="text" id="receiverAccount" name="receiverAccount" pattern="^[0-9]{12}$">
+                <label for="receiverAccount">Receiver Account:</label>
+                <input type="text" id="receiverAccount" name="receiverAccount" pattern="^[0-9]{12}$">
 
-            <label for="ifsc">IFSC Code:</label>
-            <input type="text" id="ifsc" name="ifsc" pattern="^([A-Z]{4}[0][A-Z0-9]{6})$">
+                <label for="ifsc">IFSC Code:</label>
+                <input type="text" id="ifsc" name="ifsc" pattern="^([A-Z]{4}[0][A-Z0-9]{6})$">
 
-            <label for="transferType">Transfer Type:</label>
-            <select id="transferType" name="transferType">
-                <option value="NEFT">NEFT</option>
-                <option value="RTGS">RTGS</option>
-            </select>
+                <label for="transferType">Transfer Type:</label>
+                <select id="transferType" name="transferType">
+                    <option value="NEFT">NEFT</option>
+                    <option value="RTGS">RTGS</option>
+                </select>
 
-            <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount" min="0" max="25000">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" min="0" max="25000">
 
-            <div id="error-message" class="error">
-             
-                <c:if test="${not empty error}">
-                    ${error}
-                </c:if>
-            </div>
+                <div id="error-message" class="error">
+                 
+                    <c:if test="${not empty error}">
+                        ${error}
+                    </c:if>
+                </div>
 
-            <input type="hidden" name="action" value="fundtransfer">
-            <input type="submit" value="Transfer">
-        </form>
+                <input type="hidden" name="action" value="fundtransfer">
+                <input type="submit" value="Transfer">
+            </form>
+        </div>
     </div>
 </body>
 </html>

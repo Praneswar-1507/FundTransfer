@@ -14,6 +14,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <style>
+/* Existing styles */
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -149,7 +151,7 @@ th {
 
 .modal-content button {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #2c3e50; /* Sidebar color */
     color: white;
     border: none;
     border-radius: 4px;
@@ -157,7 +159,7 @@ th {
 }
 
 .modal-content button:hover {
-    background-color: #45a049;
+    background-color: #34495e; /* Darker shade for hover */
 }
 </style>
 </head>
@@ -181,6 +183,7 @@ th {
     
     <!-- Main Content -->
     <div class="table-container">
+        <button type="button" onclick="openAddPopup()">Add User</button> <!-- Add User Button -->
         <table>
             <thead>
                 <tr>
@@ -220,28 +223,44 @@ th {
         </table>
     </div>
 
-
+    <!-- Edit Beneficiary Modal -->
     <div id="editBeneficiaryForm" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closePopup()">&times;</span>
             <h2>Edit Beneficiary</h2>
             <form id="editForm" action="updatebeneficiarydetails" method="post">
                 <input type="hidden" id="editBeneficiaryId" name="editBeneficiaryId">
-                <label for="editBeneficiaryName">Beneficiary Name:</label> <input
-                    type="text" id="editBeneficiaryName" name="editBeneficiaryName"
-                    required> <label for="editBeneficiaryAccountId">Beneficiary
-                    Account ID:</label> <input type="text" id="editBeneficiaryAccountId"
-                    name="editBeneficiaryAccountId" required> <label
-                    for="editBeneficiaryIfscCode">Beneficiary IFSC Code:</label> <input
-                    type="text" id="editBeneficiaryIfscCode"
-                    name="editBeneficiaryIfscCode" required> <input
-                    type="hidden" name="id" value="<%=session.getAttribute("id") %>"> <input
-                    type="hidden" name="action" value="editbeneficiary">
+                <label for="editBeneficiaryName">Beneficiary Name:</label> 
+                <input type="text" id="editBeneficiaryName" name="editBeneficiaryName" required>
+                <label for="editBeneficiaryAccountId">Beneficiary Account ID:</label> 
+                <input type="text" id="editBeneficiaryAccountId" name="editBeneficiaryAccountId" required> 
+                <label for="editBeneficiaryIfscCode">Beneficiary IFSC Code:</label> 
+                <input type="text" id="editBeneficiaryIfscCode" name="editBeneficiaryIfscCode" required> 
+                <input type="hidden" name="id" value="<%=session.getAttribute("id") %>"> 
+                <input type="hidden" name="action" value="editbeneficiary">
                 <button type="submit">Save Changes</button>
             </form>
         </div>
     </div>
 
+    <!-- Add Beneficiary Modal -->
+    <div id="addBeneficiaryForm" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddPopup()">&times;</span>
+            <h2>Add Beneficiary</h2>
+            <form id="addForm" action="addbeneficiary" method="post">
+                <label for="addBeneficiaryName">Beneficiary Name:</label> 
+                <input type="text" id="addBeneficiaryName" name="addBeneficiaryName" required>
+                <label for="addBeneficiaryAccountId">Beneficiary Account ID:</label> 
+                <input type="text" id="addBeneficiaryAccountId" name="addBeneficiaryAccountId" required> 
+                <label for="addBeneficiaryIfscCode">Beneficiary IFSC Code:</label> 
+                <input type="text" id="addBeneficiaryIfscCode" name="addBeneficiaryIfscCode" required> 
+                <input type="hidden" name="id" value="<%=session.getAttribute("id") %>"> 
+                <input type="hidden" name="action" value="addbeneficiary">
+                <button type="submit">Add Beneficiary</button>
+            </form>
+        </div>
+    </div>
 
     <script>
     function openPopup(beneficiaryId, beneficiaryName, beneficiaryAccountId, beneficiaryIfscCode) {
@@ -259,7 +278,19 @@ th {
         modal.style.display = 'none';
         modal.style.visibility = 'hidden';
     }
-</script>
+
+    function openAddPopup() {
+        var modal = document.getElementById('addBeneficiaryForm');
+        modal.style.display = 'flex'; 
+        modal.style.visibility = 'visible'; 
+    }
+
+    function closeAddPopup() {
+        var modal = document.getElementById('addBeneficiaryForm');
+        modal.style.display = 'none';
+        modal.style.visibility = 'hidden';
+    }
+    </script>
 
 </body>
 </html>

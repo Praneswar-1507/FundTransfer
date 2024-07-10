@@ -41,7 +41,7 @@ public class BankAccountController {
 		if (userdao.createAccount(account)) {
 			return "home.jsp";
 		} else {
-			return "home1.jsp";
+			return "home.jsp";
 		}
 
 	}
@@ -101,6 +101,8 @@ public class BankAccountController {
 	public String getUserDetails(@RequestParam("id") int userId, Model model) {
 		BankAccount bankaccount = userdao.getUserDetails(userId);
 		model.addAttribute("userprofiledetails", bankaccount);
+		int count=userdao.countMoneyRequest(userId);
+		model.addAttribute("count", count);
 		return "userProfile.jsp";
 
 	}

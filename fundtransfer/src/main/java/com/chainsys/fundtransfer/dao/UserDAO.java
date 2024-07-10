@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.chainsys.fundtransfer.model.BankAccount;
 import com.chainsys.fundtransfer.model.Beneficiary;
 import com.chainsys.fundtransfer.model.Payment;
+import com.chainsys.fundtransfer.model.RequestMoneyDetails;
 import com.chainsys.fundtransfer.model.User;
 
 @Repository
@@ -34,4 +35,10 @@ public interface UserDAO {
     public int getBeneficiaryAccountBalance(int id);
     public void updateSenderAccountBalance(int id,int balance);
     public void updateBeneficiaryAccountBalance(int id,int balance);
+    public void requestMoney(RequestMoneyDetails requestMoneyDetails);
+	public List<RequestMoneyDetails> readRequestMoney(String id);
+	public String getEmail(int id);
+	public void moneyRequestStatus(int requestId,String status);
+	public int countMoneyRequest(int id);
+
 }

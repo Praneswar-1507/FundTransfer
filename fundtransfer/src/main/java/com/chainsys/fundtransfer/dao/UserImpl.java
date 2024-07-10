@@ -11,11 +11,13 @@ import org.springframework.stereotype.Repository;
 
 import com.chainsys.fundtransfer.mapper.BeneficiaryMapper;
 import com.chainsys.fundtransfer.mapper.PaymentMapper;
+import com.chainsys.fundtransfer.mapper.RequestMoneyMapper;
 import com.chainsys.fundtransfer.mapper.UserAccountDetailsMapper;
 import com.chainsys.fundtransfer.mapper.UserMapper;
 import com.chainsys.fundtransfer.model.BankAccount;
 import com.chainsys.fundtransfer.model.Beneficiary;
 import com.chainsys.fundtransfer.model.Payment;
+import com.chainsys.fundtransfer.model.RequestMoneyDetails;
 import com.chainsys.fundtransfer.model.User;
 
 @Repository
@@ -191,6 +193,34 @@ public class UserImpl implements UserDAO {
 		int rows = jdbctemplate.update(query, params);
 
 	}
+	public void requestMoney(RequestMoneyDetails requestMoneyDetails) {
+		LocalDateTime currentDate = LocalDateTime.now();
+		String insertQuery = "INSERT INTO money_requests(user_ID,requester_id,approver_id,amount,request_date)  VALUES(?,?,?,?,?)";
+		jdbctemplate.update(insertQuery,requestMoneyDetails.getUserId(),requestMoneyDetails.getRequesterId() ,requestMoneyDetails.getApproverId() ,
+				requestMoneyDetails.getAmount(),currentDate);
+	}
+	public List<RequestMoneyDetails> readRequestMoney(String id) {
+		String readusers = "Select * from money_requests where approver_id=? and status='PENDING'";
+		return jdbctemplate.query(readusers, new RequestMoneyMapper(), id);
+	}
+	public String getEmail(int id) {
+		String accountBalance = "SELECT email from Users where user_ID=?";
+		return jdbctemplate.queryForObject(accountBalance, String.class, id);
+	}
+	public void moneyRequestStatus(int requestId,String status)
+	{
+		LocalDateTime currentDate = LocalDateTime.now();
+		String query = "update money_requests set status=?,approval_date=? where request_id=? ";
+		Object[] params = {status,currentDate,  requestId };
+		jdbctemplate.update(query, params);
+	}
+	public int countMoneyRequest(int id)
+	{
+	  String count=	"SELECT count(*) FROM fundtransfer.money_requests where user_ID=? and status='PENDING'";
+	  return jdbctemplate.queryForObject(count, Integer.class, id);
+	}
+	
+
 	
 
 }

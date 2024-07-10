@@ -79,7 +79,7 @@ public class UserController {
 				return  "admin.jsp";
 			} else {
 
-				return "redirect:/home1.jsp";
+				return "redirect:/home.jsp";
 			}
 		} else {
 			return "redirect:/signup.jsp";

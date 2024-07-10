@@ -17,7 +17,7 @@ public class LoginValidation {
 
     public boolean validatepassword(String password) {
       
-     return   password.matches("(?=.[a-zA-Z])(?=.\\d)(?=.*[@#$%^&+=!]).{8,}");
+     return   password.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}");
       
     }
 }
