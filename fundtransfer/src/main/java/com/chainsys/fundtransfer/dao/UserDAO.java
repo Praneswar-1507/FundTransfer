@@ -40,5 +40,7 @@ public interface UserDAO {
 	public String getEmail(int id);
 	public void moneyRequestStatus(int requestId,String status);
 	public int countMoneyRequest(int id);
+	public void updateCreditPoints(double creditpoints,int id);
+	public int getCreditPoints(int userId);
 
 }

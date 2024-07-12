@@ -37,7 +37,7 @@
         .sidebar h2 {
             margin: 0;
             font-size: 20px;
-            color: #fff; /* Changed sidebar header text color to white */
+            color: #fff;
         }
 
         .sidebar.collapsed h2 {
@@ -111,6 +111,18 @@
             width: calc(100% - 200px);
         }
 
+        .credit-points {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            color: #333;
+        }
+
         .container {
             width: 60%;
             margin: 0 auto;
@@ -118,7 +130,7 @@
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 30px; /* Adjusted for a higher position */
+            margin-top: 30px; 
         }
 
         h2 {
@@ -151,7 +163,7 @@
         }
 
         input[type="submit"] {
-            background-color: #2c3e50; /* Sidebar color */
+            background-color: #2c3e50; 
             color: white;
             padding: 15px 20px;
             border: none;
@@ -162,7 +174,7 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #34495e; /* Darker shade for hover */
+            background-color: #34495e;
         }
 
         select {
@@ -177,7 +189,7 @@
         .error {
             color: red;
             text-align: center;
-            margin-bottom: 10px; /* Add margin below error message */
+            margin-bottom: 10px; 
         }
     </style>
 </head>
@@ -198,6 +210,9 @@
         </ul>
     </div>
     <div class="content">
+        <div class="credit-points">
+            Credit Points: <%=session.getAttribute("creditpoints") %>
+        </div>
         <div class="container">
             <h2>Fund Transfer Form</h2>
             <form action="fundtransfer" method="post">
@@ -223,7 +238,6 @@
                 <input type="number" id="amount" name="amount" min="0" max="25000">
 
                 <div id="error-message" class="error">
-                 
                     <c:if test="${not empty error}">
                         ${error}
                     </c:if>

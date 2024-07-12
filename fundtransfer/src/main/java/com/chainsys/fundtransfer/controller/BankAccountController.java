@@ -98,11 +98,13 @@ public class BankAccountController {
 	}
 
 	@PostMapping("userprofile")
-	public String getUserDetails(@RequestParam("id") int userId, Model model) {
+	public String getUserDetails(@RequestParam("id") int userId, Model model,HttpSession session) {
 		BankAccount bankaccount = userdao.getUserDetails(userId);
 		model.addAttribute("userprofiledetails", bankaccount);
 		int count=userdao.countMoneyRequest(userId);
 		model.addAttribute("count", count);
+		int creditPoints=userdao.getCreditPoints(userId);
+		session.setAttribute("creditpoints", creditPoints);
 		return "userProfile.jsp";
 
 	}

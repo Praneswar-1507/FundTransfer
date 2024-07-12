@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FundTransfer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-8Z5c7LOcAnLjaLr0I9zGlJkPzQLBeS6RqtBv+5Rn2wNAB8lMk9sZxW+TJX1Qf6MHW2YBnn1sZ+ItcEjytdxNlA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
 * {
 	margin: 0;
@@ -161,7 +162,7 @@ footer {
 </style>
 </head>
 <body>
- <% 
+<% 
 if(session == null){
 response.sendRedirect("login.jsp");
 }
@@ -174,9 +175,9 @@ response.setHeader("Expires", "0");
 		</a>
 		<ul class="nav-items">
 		 <% if (session.getAttribute("id") != null) { %>
-			<li><a href="#">Home</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="#">Contact</a></li>
+			<li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+			<li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+			<li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
 			<% 
              session.getAttribute("username"); 
     
@@ -192,19 +193,19 @@ response.setHeader("Expires", "0");
 			
 			<li>
 				<form action="logout" method="post">
-					<button type="submit" class="login-btn">Logout</button>
+					<button type="submit" class="login-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
 				</form>
 			</li>
 		</ul>
 		  <% } else { %>
-		  <li><a href="#">Home</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="#">Contact</a></li>
+		  <li><a href="#"><i class="fa-duotone fa-house"></i> Home</a></li>
+			<li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+			<li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
 			
 			
 			<li>
 				<form action="login.jsp" method="post">
-					<button type="submit" class="login-btn">Login</button>
+					<button type="submit" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</button>
 				</form>
 			</li>
 		</ul>

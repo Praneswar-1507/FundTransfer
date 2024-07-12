@@ -112,7 +112,19 @@
         margin-left: 200px;
         padding: 20px;
         width: calc(100% - 200px);
+        position: relative; /* Ensure the credit points are positioned relative to this container */
     }
+
+    .credit-points {
+           position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            color: #333;    }
 
     .container {
         width: 60%; 
@@ -163,13 +175,13 @@
     }
 
     input[type="submit"]:hover {
-        background-color: #34495e; /* Darker shade for hover */
+        background-color: #34495e;
     }
 
     .error {
         color: red;
         text-align: center;
-        margin-bottom: 10px; /* Add margin below error message */
+        margin-bottom: 10px; 
     }
 </style>
 <script>
@@ -239,6 +251,9 @@ document.addEventListener("DOMContentLoaded", function() {
         </ul>
     </div>
     <div class="content">
+        <div class="credit-points">
+            Credit Points: <%=session.getAttribute("creditpoints") %>
+        </div>
         <div class="container">
             <h2>Fund Transfer</h2>
             <form action="beneficiaryfundtransfer" method="post" onsubmit="return validateForm()">
@@ -280,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <input type="number" id="amount" name="amount" min="0" max="200000" required>
                 
                 <div id="error-message" class="error">
-                    <%-- Display error message if present --%>
+                  
                     <c:if test="${not empty error}">
                         ${error}
                     </c:if>

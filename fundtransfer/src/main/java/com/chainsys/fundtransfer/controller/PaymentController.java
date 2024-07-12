@@ -83,6 +83,8 @@ public class PaymentController {
 		int remainingAmount = balance - amount;
 		System.out.println("remainingbalance:" + balance);
 		userdao.updateSenderAccountBalance(id, remainingAmount);
+		double creditPoints=amount*0.10;
+		userdao.updateCreditPoints(creditPoints, id);
 		Payment payment = userdao.paymentDetails();
 		model.addAttribute("Payment", payment);
 		String mail = userdao.getEmail(id);
@@ -135,6 +137,8 @@ public class PaymentController {
 		System.out.println("remainingbalance:" + beneficiaryRemainingAmount);
 		userdao.updateSenderAccountBalance(id, remainingAmount);
 		userdao.updateBeneficiaryAccountBalance(beneficiaryId, beneficiaryRemainingAmount);
+		double creditPoints=amount*0.10;
+		userdao.updateCreditPoints(creditPoints, id);
 		Payment payment = userdao.paymentDetails();
 		model.addAttribute("Payment", payment);
 		String mail = userdao.getEmail(id);

@@ -219,6 +219,19 @@ public class UserImpl implements UserDAO {
 	  String count=	"SELECT count(*) FROM fundtransfer.money_requests where user_ID=? and status='PENDING'";
 	  return jdbctemplate.queryForObject(count, Integer.class, id);
 	}
+	public void updateCreditPoints(double creditpoints,int id)
+	{
+		String query = "update Accounts set credit_points=? where user_ID=? ";
+		Object[] params = { creditpoints, id };
+		int rows = jdbctemplate.update(query, params);
+		
+	}
+	public int getCreditPoints(int userId)
+	{
+		String points = "SELECT credit_points from Accounts where user_ID=?";
+		return jdbctemplate.queryForObject(points, int.class, userId);
+		
+	}
 	
 
 	
