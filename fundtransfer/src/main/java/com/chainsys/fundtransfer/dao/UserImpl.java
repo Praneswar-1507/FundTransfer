@@ -232,8 +232,14 @@ public class UserImpl implements UserDAO {
 		return jdbctemplate.queryForObject(points, int.class, userId);
 		
 	}
+	  public boolean checkUserAlreadyExists(String AccountId) {
+	        String selectQuery = "SELECT account_ID FROM Accounts WHERE account_ID = ?";
+	        List<String> existingUsers = jdbctemplate.query(selectQuery, (rs, rowNum) -> rs.getString("account_ID"), AccountId);
+	        return !existingUsers.isEmpty();
+	    }
+	}
+	
 	
 
 	
 
-}

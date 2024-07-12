@@ -192,6 +192,7 @@
             margin-bottom: 10px; 
         }
     </style>
+    
 </head>
 <body>
     <div class="sidebar">
@@ -216,6 +217,7 @@
         <div class="container">
             <h2>Fund Transfer Form</h2>
             <form action="fundtransfer" method="post">
+          
 
                 <input type="hidden" value="<%=session.getAttribute("id") %>" name="fundId">
 
@@ -246,7 +248,28 @@
                 <input type="hidden" name="action" value="fundtransfer">
                 <input type="submit" value="Transfer">
             </form>
+              <input type="hidden" id="status" value="<%= request.getAttribute("status") %>">
+            <input type="hidden" id="message" value="<%= request.getAttribute("message") %>">
         </div>
     </div>
+    <script>
+        var status = document.getElementById('status').value;
+    var message = document.getElementById('message').value;
+
+            if (status === "success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: message
+                });
+            } else if (status === "failure") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'error!',
+                    text: message
+                });
+            }
+        
+    </script>
 </body>
 </html>

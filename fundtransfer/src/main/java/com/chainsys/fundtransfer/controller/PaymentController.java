@@ -15,7 +15,7 @@ import com.chainsys.fundtransfer.model.Payment;
 import com.chainsys.fundtransfer.model.RequestMoneyDetails;
 import com.chainsys.fundtransfer.util.Email;
 import com.chainsys.fundtransfer.validation.FundTransferValidation;
-
+import jakarta.servlet.http.HttpSession;
 @Controller
 public class PaymentController {
 	@Autowired
@@ -63,6 +63,8 @@ public class PaymentController {
 			@RequestParam("receiverAccount") String receiverAccountId, @RequestParam("ifsc") String ifsc,
 			@RequestParam("transferType") String transferType, @RequestParam("amount") int amount,
 			@RequestParam("fundId") int id, Model model) {
+		boolean accountIdExist=userdao.checkUserAlreadyExists(receiverAccountId);
+		 if(accountIdExist) {
 		payment.setSendAccountNo(senderAccountId);
 		payment.setRecepientAccountNo(receiverAccountId);
 		payment.setiFSC(ifsc);
@@ -97,7 +99,16 @@ public class PaymentController {
         email.sendTransactionEmail(mail, subject, body);
 		return "paymentSuccess.jsp";
 		}
-
+		 }
+		else
+		{
+			String accountId = userdao.getAccountId(id);
+			model.addAttribute("accountId", accountId);
+			model.addAttribute("status", "failure");
+            model.addAttribute("message", "Order placed successfully!");
+            return "fundTransfer.jsp";    
+		}
+		
 	}
 
 	@GetMapping("TransactionHistory")
@@ -153,7 +164,7 @@ public class PaymentController {
 		}
 
 	}
-	@PostMapping("requestMoney")
+	@PostMapping("moneyrequest")
 	public String requestMoney(@RequestParam("userId") int id,@RequestParam("approverId") String approverAccountId,@RequestParam("amount") int amount) {
 		String accountId=userdao.getAccountId(id);
 		System.out.println(approverAccountId);
@@ -164,7 +175,7 @@ public class PaymentController {
 		userdao.requestMoney(requestMoneyDetails);
 		return "home.jsp";
 	}
-	@GetMapping("viewmoneyrequest")
+	@GetMapping("request")
 	public String viewMoneyRequest(@RequestParam("userId") int userId, Model model) {
 		String accountId=userdao.getAccountId(userId);
 		List<RequestMoneyDetails> money = userdao.readRequestMoney(accountId);
@@ -207,5 +218,25 @@ public class PaymentController {
 		return "moneyRequest.jsp";
 		}
 		
+	}
+	@PostMapping("redeempoints")
+	public String redeemPoints(@RequestParam("id") int userId,@RequestParam("points") int points,Model model,HttpSession session)
+	{
+		int creditPoints=userdao.getCreditPoints(userId);
+		System.out.println(creditPoints);
+		int RemainingCreditPoints=creditPoints-points;
+		int balance = userdao.getUserAccountBalance(userId);
+		   int additionalBalance = (creditPoints / 1000) * 50;
+		   System.out.println(additionalBalance);
+		 int  remainingAmount=balance+additionalBalance;
+		userdao.updateCreditPoints(RemainingCreditPoints, userId);
+		userdao.updateSenderAccountBalance(userId, remainingAmount);
+		BankAccount bankaccount = userdao.getUserDetails(userId);
+		model.addAttribute("userprofiledetails", bankaccount);
+		int count=userdao.countMoneyRequest(userId);
+		model.addAttribute("count", count);
+		session.setAttribute("creditpoints", RemainingCreditPoints);
+		return "userProfile.jsp";
+
 	}
 }

@@ -42,5 +42,6 @@ public interface UserDAO {
 	public int countMoneyRequest(int id);
 	public void updateCreditPoints(double creditpoints,int id);
 	public int getCreditPoints(int userId);
+	  public boolean checkUserAlreadyExists(String AccountId) ;
 
 }
