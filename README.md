@@ -45,7 +45,6 @@ Fund transfer functionality allows users to seamlessly transfer money between th
 ### Technologies used:-
 1. Front-End Development:
 - Html 5.
-- Thymeleaf Template. 
 - CSS.
 - Javascript.
 
@@ -55,12 +54,12 @@ Fund transfer functionality allows users to seamlessly transfer money between th
 - Spring Boot
 
 3. Database:
-- Oracle Sql
+- MySQL
 
 ### ================ Software And Tools Required ================
 - Eclipse
 - Java [JDK 17]
-- Tomcat v8.0+
+- Tomcat v9.0
 - Apache Maven
 - Editor Sql developer
 
