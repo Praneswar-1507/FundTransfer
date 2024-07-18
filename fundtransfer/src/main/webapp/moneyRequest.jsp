@@ -9,8 +9,7 @@
     <title>View Money Requests</title>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-          integrity="sha512-Fo3rlrZj/k7ujTnH2N2QZnBjl0XKq8jn59xN2ePv+I1fdk0/5R1d6Q4B5sH8p+E4GZpv6/OiPq4sMz7MWZsPdA=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+          >
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -208,6 +207,7 @@
             document.getElementById(popupId).style.display = "none";
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <div class="sidebar">
@@ -221,7 +221,7 @@
         <li><a href="#" onclick="openPopup('depositPopup')"><i class="fas fa-coins"></i> Deposit</a></li>
         <li><a href="TransactionHistory?userId=<%=session.getAttribute("id")%>"><i class="fas fa-history"></i> Transaction History</a></li>
         <li><a href="viewbeneficiary?userId=<%=session.getAttribute("id")%>"><i class="fas fa-history"></i>Beneficiary</a></li>
-        <li><a href="viewmoneyrequest"><i class="fas fa-list-alt"></i>Money Requests</a></li>
+        <li><a href="viewmoneyrequest"> <i class="fas fa-comments-dollar"></i> Money Requests</a></li>
     </ul>
 </div>
 <div class="content">
@@ -295,5 +295,24 @@
         </form>
     </div>
 </div>
+<script>
+        var status = document.getElementById('status').value;
+    var message = document.getElementById('message').value;
+
+            if (status === "success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: message
+                });
+            } else if (status === "failure") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'error!',
+                    text: message
+                });
+            }
+        
+    </script>
 </body>
 </html>

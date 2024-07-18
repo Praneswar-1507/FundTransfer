@@ -105,7 +105,7 @@ public class PaymentController {
 			String accountId = userdao.getAccountId(id);
 			model.addAttribute("accountId", accountId);
 			model.addAttribute("status", "failure");
-            model.addAttribute("message", "Order placed successfully!");
+            model.addAttribute("message", "Invalid AccountId");
             return "fundTransfer.jsp";    
 		}
 		
@@ -164,8 +164,10 @@ public class PaymentController {
 		}
 
 	}
-	@PostMapping("moneyrequest")
-	public String requestMoney(@RequestParam("userId") int id,@RequestParam("approverId") String approverAccountId,@RequestParam("amount") int amount) {
+	@PostMapping("requestMoney")
+	public String requestMoney(@RequestParam("userId") int id,@RequestParam("approverId") String approverAccountId,@RequestParam("amount") int amount,Model model) {
+		boolean accountIdExist=userdao.checkUserAlreadyExists(approverAccountId);
+		 if(accountIdExist) {
 		String accountId=userdao.getAccountId(id);
 		System.out.println(approverAccountId);
 		requestMoneyDetails.setRequesterId(accountId);
@@ -174,8 +176,16 @@ public class PaymentController {
 		requestMoneyDetails.setUserId(id);
 		userdao.requestMoney(requestMoneyDetails);
 		return "home.jsp";
+		 }
+		 else
+			{
+				model.addAttribute("status", "failure");
+	            model.addAttribute("message", "Invalid AccountId");
+	            return "moneyRequest.jsp";    
+			}
+			
 	}
-	@GetMapping("request")
+	@GetMapping("viewmoneyrequest")
 	public String viewMoneyRequest(@RequestParam("userId") int userId, Model model) {
 		String accountId=userdao.getAccountId(userId);
 		List<RequestMoneyDetails> money = userdao.readRequestMoney(accountId);
@@ -220,7 +230,7 @@ public class PaymentController {
 		
 	}
 	@PostMapping("redeempoints")
-	public String redeemPoints(@RequestParam("id") int userId,@RequestParam("points") int points,Model model,HttpSession session)
+	public String redeemPoints(@RequestParam("id") int userId, @RequestParam("points") int points,Model model,HttpSession session)
 	{
 		int creditPoints=userdao.getCreditPoints(userId);
 		System.out.println(creditPoints);
@@ -233,7 +243,8 @@ public class PaymentController {
 		userdao.updateSenderAccountBalance(userId, remainingAmount);
 		BankAccount bankaccount = userdao.getUserDetails(userId);
 		model.addAttribute("userprofiledetails", bankaccount);
-		int count=userdao.countMoneyRequest(userId);
+		String accountId = userdao.getAccountId(userId);
+		int count=userdao.countMoneyRequest(accountId);
 		model.addAttribute("count", count);
 		session.setAttribute("creditpoints", RemainingCreditPoints);
 		return "userProfile.jsp";

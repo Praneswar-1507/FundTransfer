@@ -99,9 +99,10 @@ public class BankAccountController {
 
 	@PostMapping("userprofile")
 	public String getUserDetails(@RequestParam("id") int userId, Model model,HttpSession session) {
+		String accountId = userdao.getAccountId(userId);
 		BankAccount bankaccount = userdao.getUserDetails(userId);
 		model.addAttribute("userprofiledetails", bankaccount);
-		int count=userdao.countMoneyRequest(userId);
+		int count=userdao.countMoneyRequest(accountId);
 		model.addAttribute("count", count);
 		int creditPoints=userdao.getCreditPoints(userId);
 		session.setAttribute("creditpoints", creditPoints);

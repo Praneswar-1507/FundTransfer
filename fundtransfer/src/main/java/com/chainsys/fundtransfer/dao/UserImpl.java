@@ -214,10 +214,10 @@ public class UserImpl implements UserDAO {
 		Object[] params = {status,currentDate,  requestId };
 		jdbctemplate.update(query, params);
 	}
-	public int countMoneyRequest(int id)
+	public int countMoneyRequest(String accountId)
 	{
-	  String count=	"SELECT count(*) FROM fundtransfer.money_requests where user_ID=? and status='PENDING'";
-	  return jdbctemplate.queryForObject(count, Integer.class, id);
+	  String count=	"SELECT count(*) FROM fundtransfer.money_requests where approver_id=? and status='PENDING'";
+	  return jdbctemplate.queryForObject(count, Integer.class, accountId);
 	}
 	public void updateCreditPoints(double creditpoints,int id)
 	{

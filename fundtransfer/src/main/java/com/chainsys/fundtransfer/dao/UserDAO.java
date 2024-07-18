@@ -39,7 +39,7 @@ public interface UserDAO {
 	public List<RequestMoneyDetails> readRequestMoney(String id);
 	public String getEmail(int id);
 	public void moneyRequestStatus(int requestId,String status);
-	public int countMoneyRequest(int id);
+	public int countMoneyRequest(String accountId);
 	public void updateCreditPoints(double creditpoints,int id);
 	public int getCreditPoints(int userId);
 	  public boolean checkUserAlreadyExists(String AccountId) ;

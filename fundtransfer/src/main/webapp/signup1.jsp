@@ -131,13 +131,13 @@ img{
     justify-content: center;
     align-items: center;
      padding: 6rem 1rem 1rem;
+      margin-top: 30px;
 }
 .form__content{
    width: 290px;
     max-width: 100%;
     text-align: center;
     margin-top: 110px; 
-     margin-left: -50px;
 }
 .form__img{
     display: none;
@@ -161,7 +161,7 @@ img{
 }
 
 .form__div-one{
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .form__icon{
@@ -183,7 +183,7 @@ img{
     font-size: var(--normal-font-size);
     color: var(--text-color);
     transition: .3s;
-    pointer-events: none; /* This line disables pointer events on the label */
+    pointer-events: none; 
 }
 /*=== Label focus ===*/
 .form__div.focus .form__label{
@@ -194,6 +194,7 @@ img{
 
 .form__div-input{
     position: relative;
+     margin-top: 1px; /
 }
 .form__input{
     position: absolute;
@@ -283,13 +284,12 @@ img{
         display: block;
         width: 700px;
         justify-self: center;
-         margin-bottom: 40px;
-          margin-left: -100px; 
+         margin-bottom: 70px;
     }
 }
   .form__signup {
             text-align: center;
-            margin-bottom: 10px; 
+            margin-top: 0.05rem; 
         }
         .form__signup-text {
             font-size: var(--smaller-font-size);
@@ -323,15 +323,32 @@ img{
         <div class="form">
             <img src="images/login.jpg" alt="login" class="form__img">
             <form action="login" method="post" class="form__content">
-                <h1 class="form__title">Welcome</h1>
 
                 <div class="form__div form__div-one">
                     <div class="form__icon">
                         <i class='bx bx-user-circle'></i>
                     </div>
-                    <div class="form__div-input">
+                    <div class="form__div-input ">
                         <label for="username" class="form__label"></label>
-                        <input type="text" id="username" name="email" placeholder="Email" required class="form__input">
+                        <input type="text" id="username" name="email" placeholder="Username" required class="form__input">
+                    </div>
+                </div>
+                 <div class="form__div form__div-one">
+                    <div class="form__icon">
+                        <i class='bx bx-lock'></i>
+                    </div>
+                    <div class="form__div-input">
+                        <label for="password" class="form__label"></label>
+                        <input type="password" id="password" name="password" placeholder="Email" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}" class="form__input">
+                    </div>
+                </div>
+                 <div class="form__div form__div-one">
+                    <div class="form__icon">
+                        <i class='bx bx-lock'></i>
+                    </div>
+                    <div class="form__div-input">
+                        <label for="password" class="form__label"></label>
+                        <input type="password" id="password" name="password" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}" class="form__input">
                     </div>
                 </div>
 
@@ -341,16 +358,15 @@ img{
                     </div>
                     <div class="form__div-input">
                         <label for="password" class="form__label"></label>
-                        <input type="password" id="password" name="password" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}" class="form__input">
+                        <input type="password" id="password" name="password" placeholder="Confirm Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[&^%$#@]).{5,}" class="form__input">
                     </div>
                 </div>
-                <a href="#" class="form__forgot">Forgot Password?</a>
                 <input type="hidden" name="action" value="login1">
                 <input type="submit" class="form__button">
 
                 <div class="form__signup">
-                    <p class="form__signup-text">Don't have an account?
-                    <a href="signup1.jsp" class="form__signup-link">Sign up here</a></p>
+                    <p class="form__signup-text">Don't have an account?</p>
+                    <a href="signup.jsp" class="form__signup-link">Sign up here</a>
                 </div>
             </form>
         </div>

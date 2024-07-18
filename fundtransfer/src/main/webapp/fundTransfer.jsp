@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Fund Transfer Form</title>
+        <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -192,7 +195,7 @@
             margin-bottom: 10px; 
         }
     </style>
-    
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
     <div class="sidebar">

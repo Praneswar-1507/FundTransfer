@@ -9,8 +9,7 @@
 <title>Transaction History</title>
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    integrity="sha512-Fo3rlrZj/k7ujTnH2N2QZnBjl0XKq8jn59xN2ePv+I1fdk0/5R1d6Q4B5sH8p+E4GZpv6/OiPq4sMz7MWZsPdA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+>
 <link href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cosmo/bootstrap.min.css" rel="stylesheet">
@@ -130,11 +129,11 @@ th {
     <div class="sidebar">
         <div class="sidebar-header">
             <h2>
-                <i class="fas fa-piggy-bank"></i> fastpay
+               Fastpay
             </h2>
         </div>
         <ul>
-            <li><a href="userProfile.jsp"><i class="fas fa-key"></i>UserProfile</a></li>
+            <li><a href="userProfile.jsp"><i class="fas fa-user"></i>UserProfile</a></li>
             <li><a href="#" role="button" onclick="openPopup()"
                 aria-label="Deposit"> <i class="fas fa-user"></i> Deposit
             </a></li>

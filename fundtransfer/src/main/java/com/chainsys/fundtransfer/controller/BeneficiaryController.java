@@ -3,6 +3,7 @@ package com.chainsys.fundtransfer.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.chainsys.fundtransfer.dao.UserDAO;
+import com.chainsys.fundtransfer.exceptionhandling.BeneficiaryException;
 import com.chainsys.fundtransfer.model.BankAccount;
 import com.chainsys.fundtransfer.model.Beneficiary;
 
@@ -30,7 +32,14 @@ public class BeneficiaryController {
 		beneficiary.setBeneficiaryAccountId(beneficiaryAccountId);
 		beneficiary.setIfsccode(ifscCode);
 		beneficiary.setUserId(id);
+		try
+		{
 		userdao.addBeneficiary(beneficiary);
+		}
+		catch(DuplicateKeyException e)
+		{
+			throw new BeneficiaryException ("user already exist");
+		}
 		List<Beneficiary> beneficiary = userdao.getBeneficiaryDetails(id);
 		System.out.println(beneficiary);
 		session.setAttribute("beneficiarydetails", beneficiary);
